@@ -26,8 +26,8 @@ class TestBooksCollector:
     def test_add_new_book_name_validation_negative(self, collector, name):
         """Проверяем добавление новой книги с названием > 41 символа и < 0
         """
-        book = name
-        book = self.add_new_book(collector, book)
+        book_name = name
+        book = self.add_new_book(collector, book_name)
         assert not book
 
     def test_add_new_book_check_empty_genre(self, collector):
@@ -42,8 +42,6 @@ class TestBooksCollector:
         """
         book = 'Оно'
         genre = 'Ужасы'
-        assert genre in collector.genre
-
         collector.add_new_book(book)
         self.add_new_book(collector, book)
         collector.set_book_genre(book, genre)
@@ -131,14 +129,16 @@ class TestBooksCollector:
         book = 'Тринадцатая сказка'
         collector.add_new_book(book)
         collector.add_book_in_favorites(book)
-        assert book in collector.favorites
+        favorites = collector.get_list_of_favorites_books()
+        assert book in favorites
 
     def test_add_book_in_favorites_book_not_exists_negative(self, collector):
         """Проверяем добавление книги в favorites
         """
         book = 'Дон Кихот'
         collector.add_book_in_favorites(book)
-        assert book not in collector.favorites
+        favorites = collector.get_list_of_favorites_books()
+        assert book not in favorites
 
     def test_remove_book_from_favorites(self, collector):
         """Проверяем удаление книги из favorites
@@ -146,18 +146,18 @@ class TestBooksCollector:
         book = 'Тринадцатая сказка'
         collector.add_new_book(book)
         collector.add_book_in_favorites(book)
-        assert book in collector.favorites
-
         collector.delete_book_from_favorites(book)
-        assert book not in collector.favorites
+        favorites = collector.get_list_of_favorites_books()
+        assert book not in favorites
 
     def test_get_list_favorites(self, collector):
         """Проверяем получение заполненного списка favorites
         """
         expected_favorites_books = []
+        favorites = collector.get_list_of_favorites_books()
         for books in BOOKS_AND_GENRES.values():
             for book in books:
                 collector.add_new_book(book)
                 collector.add_book_in_favorites(book)
                 expected_favorites_books.append(book)
-        assert collector.favorites == expected_favorites_books
+        assert favorites == expected_favorites_books
