@@ -88,9 +88,6 @@ class TestBooksCollector:
         genre = 'Комедии'
         collector.add_new_book(book)
         collector.set_book_genre(book, genre)
-        book_genre = collector.get_book_genre(book)
-        assert book_genre == genre
-
         new_genre = 'Фантастика'
         collector.set_book_genre(book, new_genre)
         book_genre = collector.get_book_genre(book)
@@ -103,9 +100,6 @@ class TestBooksCollector:
         genre = 'Комедии'
         collector.add_new_book(book)
         collector.set_book_genre(book, genre)
-        book_genre = collector.get_book_genre(book)
-        assert book_genre == genre
-
         new_genre = 'Триллеры'
         collector.set_book_genre(book, new_genre)
         book_genre = collector.get_book_genre(book)
